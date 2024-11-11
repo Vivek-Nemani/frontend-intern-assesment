@@ -1,0 +1,33 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  body {
+    background-color: #181818;  /* Dark background */
+    color: #f0f0f0;  /* Light text color */
+    font-size: 16px;
+    padding: 20px;
+  }
+  
+  h1, h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #f0f0f0;
+  }
+  
+  button {
+    font-family: 'Arial', sans-serif;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }

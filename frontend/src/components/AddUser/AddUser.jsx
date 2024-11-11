@@ -1,36 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { addUser, updateUser } from '../../services/userService';
-import './UserEdit.css';
+import React, { useState } from 'react';
+import { addUser } from '../../services/userService';  // Assuming addUser is already in your service
+import './AddUser.css';
 
-const UserEdit = ({ user, onSave }) => {
+const AddUser = ({ onSave }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [dob, setDob] = useState('');
 
-  // Populate form if editing a user
-  useEffect(() => {
-    if (user) {
-      setName(user.name);
-      setEmail(user.email);
-      setDob(user.dateOfBirth);
-    }
-  }, [user]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const userData = { name, email, dateOfBirth: dob };
-
-    if (user) {
-      await updateUser(user.id, userData); // Update existing user
-    } else {
-      await addUser(userData);             // Add new user
-    }
-    onSave(); // Save and reset
+    await addUser(userData);
+    onSave(); // Trigger onSave callback to close the form
   };
 
   return (
     <form onSubmit={handleSubmit} className="user-edit-form">
-      <h2>{user ? 'Edit User' : 'Add User'}</h2>
+      <h2>Add New User</h2>
       <input
         type="text"
         placeholder="Name"
@@ -49,9 +35,9 @@ const UserEdit = ({ user, onSave }) => {
         value={dob}
         onChange={(e) => setDob(e.target.value)}
       />
-      <button type="submit">{user ? 'Update' : 'Add'} User</button>
+      <button type="submit">Add User</button>
     </form>
   );
 };
 
-export default UserEdit;
+export default AddUser;
