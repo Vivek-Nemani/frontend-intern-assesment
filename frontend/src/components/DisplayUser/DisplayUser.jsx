@@ -5,37 +5,32 @@ import './DisplayUser.css';
 const DisplayUser = ({ onEditUser }) => {
   const [users, setUsers] = useState([]);
 
-  // Fetch users on component load
   useEffect(() => {
     const fetchUsers = async () => {
-      const data = await getUsers(); // Fetch mock data
-      console.log('Fetched users:', data); // Check if data is fetched
+      const data = await getUsers();
       setUsers(data);
     };
     fetchUsers();
   }, []);
 
-  // Handle user deletion
   const handleDelete = async (id) => {
-    await deleteUser(id); // Delete user
-    setUsers(users.filter(user => user.id !== id)); // Update list
+    await deleteUser(id);
+    setUsers(users.filter((user) => user.id !== id));
   };
 
   return (
     <div className="user-list">
       <h2>Registered Users</h2>
       <ul>
-        {users.length === 0 ? (
-          <p>No users found</p>
-        ) : (
-          users.map((user) => (
-            <li key={user.id} className="user-item">
-              <span>{user.name} - {user.email}</span>
+        {users.map((user) => (
+          <li key={user.id} className="user-item">
+            <span>{user.name} - {user.email}</span>
+            <div className="button-container">
               <button onClick={() => onEditUser(user)}>Edit</button>
               <button onClick={() => handleDelete(user.id)}>Delete</button>
-            </li>
-          ))
-        )}
+            </div>
+          </li>
+        ))}
       </ul>
     </div>
   );
