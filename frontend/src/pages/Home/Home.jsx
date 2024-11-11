@@ -12,6 +12,7 @@ const Home = () => {
   const handleEditUser = (user) => {
     setSelectedUser(user);
     setEditingUser(true);  // Set editing mode on when user clicks "Edit"
+    setShowAddUserForm(false);  // Hide AddUser form when editing
   };
 
   const handleSave = () => {
@@ -23,6 +24,13 @@ const Home = () => {
   const handleAddUserButtonClick = () => {
     setShowAddUserForm(!showAddUserForm);  // Toggle AddUser form visibility
     setEditingUser(false);  // Close edit mode if AddUser form is opened
+    setSelectedUser(null);  // Clear selected user when adding new user
+  };
+
+  const handleCloseForm = () => {
+    setShowAddUserForm(false);  // Close AddUser form
+    setEditingUser(false);  // Close EditUser form
+    setSelectedUser(null);  // Clear selected user
   };
 
   return (
@@ -33,10 +41,20 @@ const Home = () => {
       <button onClick={handleAddUserButtonClick}>Add New User</button>
       
       {/* Conditionally render the AddUser form */}
-      {showAddUserForm && <AddUser onSave={handleSave} />}
+      {showAddUserForm && (
+        <div className="form-container">
+          <AddUser onSave={handleSave} />
+          <button className="close-button" onClick={handleCloseForm}>X</button>
+        </div>
+      )}
       
       {/* Conditionally render the Edit User form */}
-      {editingUser && <UserEdit user={selectedUser} onSave={handleSave} />}
+      {editingUser && (
+        <div className="form-container">
+          <UserEdit user={selectedUser} onSave={handleSave} />
+          <button className="close-button" onClick={handleCloseForm}>X</button>
+        </div>
+      )}
       
       {/* Display the list of users */}
       <DisplayUser onEditUser={handleEditUser} />

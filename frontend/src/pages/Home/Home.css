@@ -28,3 +28,33 @@
     background-color: #357ABD;
     transform: scale(1.05);
   }
+  /* Style for the form container */
+.form-container {
+    position: relative;  /* Make the form container the relative container for absolute positioning of the close button */
+    margin-top: 20px;
+  }
+  
+  /* Style adjustments for the user forms */
+  .add-user-form,
+  .edit-user-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  /* Style for the close button */
+  .close-button {
+    position: absolute;  /* Absolute positioning inside the relative container */
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+  }
