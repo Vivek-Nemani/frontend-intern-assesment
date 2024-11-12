@@ -13,18 +13,15 @@ public class UserService {
 
     private final UserRepo userRepo;
 
-    // Constructor injection of the repository
     @Autowired
     public UserService(UserRepo userRepo) {
         this.userRepo = userRepo;
     }
 
-    // Get all users
     public List<UserModel> getAllUsers() {
         return userRepo.findAll();
     }
 
-    // Get user by ID
     public Optional<UserModel> getUserById(Long id) {
         return userRepo.findById(id);
     }
@@ -34,7 +31,6 @@ public class UserService {
         return userRepo.save(user);
     }
 
-    // Delete a user by ID
     public void deleteUser(Long id) {
         userRepo.deleteById(id);
     }

@@ -1,43 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { getUsers } from '../../services/userService';  
 import DisplayUser from '../../components/DisplayUser/DisplayUser';
 import UserEdit from '../../components/UserEdit/UserEdit';
-import AddUser from '../../components/AddUser/AddUser';  // Import AddUser component
+import AddUser from '../../components/AddUser/AddUser';  
 import './Home.css';
 
 const Home = () => {
-  const [selectedUser, setSelectedUser] = useState(null);  // Track the user being edited
-  const [showAddUserForm, setShowAddUserForm] = useState(false);  // State to toggle AddUser form visibility
-  const [editingUser, setEditingUser] = useState(false); // State to track if the user is in edit mode
+  const [selectedUser, setSelectedUser] = useState(null);  
+  const [showAddUserForm, setShowAddUserForm] = useState(false);
+  const [editingUser, setEditingUser] = useState(false);
+  const [users, setUsers] = useState([]);  
+
+  useEffect(() => {
+
+    const fetchUsers = async () => {
+      try {
+        const fetchedUsers = await getUsers();
+        setUsers(fetchedUsers); 
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    
+    fetchUsers();
+  }, []); 
 
   const handleEditUser = (user) => {
     setSelectedUser(user);
-    setEditingUser(true);  // Set editing mode on when user clicks "Edit"
-    setShowAddUserForm(false);  // Hide AddUser form when editing
+    setEditingUser(true);  
+    setShowAddUserForm(false);  
   };
 
   const handleSave = () => {
     setSelectedUser(null);
-    setEditingUser(false);  // Close edit mode after saving
-    setShowAddUserForm(false);  // Close Add User form after saving
+    setEditingUser(false);  
+    setShowAddUserForm(false);  
+    refreshUserList();  
   };
 
   const handleAddUserButtonClick = () => {
-    setShowAddUserForm(!showAddUserForm);  // Toggle AddUser form visibility
-    setEditingUser(false);  // Close edit mode if AddUser form is opened
-    setSelectedUser(null);  // Clear selected user when adding new user
+    setShowAddUserForm(!showAddUserForm); 
+    setEditingUser(false);  
+    setSelectedUser(null);  
   };
 
   const handleCloseForm = () => {
-    setShowAddUserForm(false);  // Close AddUser form
-    setEditingUser(false);  // Close EditUser form
-    setSelectedUser(null);  // Clear selected user
+    setShowAddUserForm(false);  
+    setEditingUser(false);  
+    setSelectedUser(null);  
+  };
+
+  const refreshUserList = async () => {
+    try {
+      const fetchedUsers = await getUsers();  
+      setUsers(fetchedUsers);  
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
   };
 
   return (
     <div className="home-container">
       <h1>Manage Users</h1>
       
-      {/* Button to toggle AddUser form */}
+
       <button onClick={handleAddUserButtonClick}>Add New User</button>
       
       {/* Conditionally render the AddUser form */}
@@ -48,7 +74,7 @@ const Home = () => {
         </div>
       )}
       
-      {/* Conditionally render the Edit User form */}
+
       {editingUser && (
         <div className="form-container">
           <UserEdit user={selectedUser} onSave={handleSave} />
@@ -56,8 +82,8 @@ const Home = () => {
         </div>
       )}
       
-      {/* Display the list of users */}
-      <DisplayUser onEditUser={handleEditUser} />
+
+      <DisplayUser users={users} onEditUser={handleEditUser} />
     </div>
   );
 };

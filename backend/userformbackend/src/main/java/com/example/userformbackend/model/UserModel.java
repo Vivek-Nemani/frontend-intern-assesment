@@ -18,8 +18,6 @@ public class UserModel {
     private String email;
     private LocalDate dateOfBirth;
 
-    // Getters and setters
-
     public Long getId() {
         return id;
     }
