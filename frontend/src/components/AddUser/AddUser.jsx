@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { addUser } from '../../services/userService';  // Assuming addUser is already in your service
+import { addUser } from '../../services/userService';
 import './AddUser.css';
 
 const AddUser = ({ onSave }) => {
@@ -11,7 +11,7 @@ const AddUser = ({ onSave }) => {
     e.preventDefault();
     const userData = { name, email, dateOfBirth: dob };
     await addUser(userData);
-    onSave(); // Trigger onSave callback to close the form
+    onSave();
   };
 
   return (
